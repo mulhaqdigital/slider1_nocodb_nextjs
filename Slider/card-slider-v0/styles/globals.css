@@ -1,93 +1,151 @@
+/* Import Tailwind's base styles */
 @tailwind base;
+/* Import Tailwind's component classes */
 @tailwind components;
+/* Import Tailwind's utility classes */
 @tailwind utilities;
 
+/* Global body styles */
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Custom utility classes */
 @layer utilities {
+  /* Add text balance utility for better text wrapping */
   .text-balance {
     text-wrap: balance;
   }
 }
 
+/* Base theme configuration */
 @layer base {
+  /* Light theme variables */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Background colors */
+    --background: 0 0% 100%;      /* Pure white background */
+    --foreground: 0 0% 3.9%;      /* Almost black text */
+    
+    /* Card styles */
+    --card: 0 0% 100%;            /* White card background */
+    --card-foreground: 0 0% 3.9%; /* Dark card text */
+    
+    /* Popover styles */
+    --popover: 0 0% 100%;         /* White popover background */
+    --popover-foreground: 0 0% 3.9%; /* Dark popover text */
+    
+    /* Primary colors */
+    --primary: 0 0% 9%;           /* Dark primary color */
+    --primary-foreground: 0 0% 98%; /* Light text on primary */
+    
+    /* Secondary colors */
+    --secondary: 0 0% 96.1%;      /* Light secondary background */
+    --secondary-foreground: 0 0% 9%; /* Dark text on secondary */
+    
+    /* Muted colors */
+    --muted: 0 0% 96.1%;          /* Light muted background */
+    --muted-foreground: 0 0% 45.1%; /* Muted text color */
+    
+    /* Accent colors */
+    --accent: 0 0% 96.1%;         /* Light accent background */
+    --accent-foreground: 0 0% 9%; /* Dark text on accent */
+    
+    /* Destructive colors */
+    --destructive: 0 84.2% 60.2%; /* Red destructive color */
+    --destructive-foreground: 0 0% 98%; /* Light text on destructive */
+    
+    /* UI element colors */
+    --border: 0 0% 89.8%;         /* Border color */
+    --input: 0 0% 89.8%;          /* Input border color */
+    --ring: 0 0% 3.9%;            /* Focus ring color */
+    
+    /* Chart colors */
+    --chart-1: 12 76% 61%;        /* Chart color 1 */
+    --chart-2: 173 58% 39%;       /* Chart color 2 */
+    --chart-3: 197 37% 24%;       /* Chart color 3 */
+    --chart-4: 43 74% 66%;        /* Chart color 4 */
+    --chart-5: 27 87% 67%;        /* Chart color 5 */
+    
+    /* Border radius */
+    --radius: 0.5rem;             /* Default border radius */
+    
+    /* Sidebar styles */
+    --sidebar-background: 0 0% 98%;    /* Light sidebar background */
+    --sidebar-foreground: 240 5.3% 26.1%; /* Sidebar text color */
+    --sidebar-primary: 240 5.9% 10%;   /* Sidebar primary color */
+    --sidebar-primary-foreground: 0 0% 98%; /* Text on sidebar primary */
+    --sidebar-accent: 240 4.8% 95.9%;  /* Sidebar accent color */
+    --sidebar-accent-foreground: 240 5.9% 10%; /* Text on sidebar accent */
+    --sidebar-border: 220 13% 91%;     /* Sidebar border color */
+    --sidebar-ring: 217.2 91.2% 59.8%; /* Sidebar focus ring color */
   }
+
+  /* Dark theme variables */
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Background colors */
+    --background: 0 0% 3.9%;      /* Dark background */
+    --foreground: 0 0% 98%;       /* Light text */
+    
+    /* Card styles */
+    --card: 0 0% 3.9%;            /* Dark card background */
+    --card-foreground: 0 0% 98%;  /* Light card text */
+    
+    /* Popover styles */
+    --popover: 0 0% 3.9%;         /* Dark popover background */
+    --popover-foreground: 0 0% 98%; /* Light popover text */
+    
+    /* Primary colors */
+    --primary: 0 0% 98%;          /* Light primary color */
+    --primary-foreground: 0 0% 9%; /* Dark text on primary */
+    
+    /* Secondary colors */
+    --secondary: 0 0% 14.9%;      /* Dark secondary background */
+    --secondary-foreground: 0 0% 98%; /* Light text on secondary */
+    
+    /* Muted colors */
+    --muted: 0 0% 14.9%;          /* Dark muted background */
+    --muted-foreground: 0 0% 63.9%; /* Muted text color */
+    
+    /* Accent colors */
+    --accent: 0 0% 14.9%;         /* Dark accent background */
+    --accent-foreground: 0 0% 98%; /* Light text on accent */
+    
+    /* Destructive colors */
+    --destructive: 0 62.8% 30.6%; /* Dark red destructive color */
+    --destructive-foreground: 0 0% 98%; /* Light text on destructive */
+    
+    /* UI element colors */
+    --border: 0 0% 14.9%;         /* Dark border color */
+    --input: 0 0% 14.9%;          /* Dark input border color */
+    --ring: 0 0% 83.1%;           /* Light focus ring color */
+    
+    /* Chart colors - adjusted for dark theme */
+    --chart-1: 220 70% 50%;       /* Chart color 1 */
+    --chart-2: 160 60% 45%;       /* Chart color 2 */
+    --chart-3: 30 80% 55%;        /* Chart color 3 */
+    --chart-4: 280 65% 60%;       /* Chart color 4 */
+    --chart-5: 340 75% 55%;       /* Chart color 5 */
+    
+    /* Sidebar styles - dark theme */
+    --sidebar-background: 240 5.9% 10%;    /* Dark sidebar background */
+    --sidebar-foreground: 240 4.8% 95.9%;  /* Light sidebar text */
+    --sidebar-primary: 224.3 76.3% 48%;    /* Sidebar primary color */
+    --sidebar-primary-foreground: 0 0% 100%; /* White text on sidebar primary */
+    --sidebar-accent: 240 3.7% 15.9%;      /* Dark sidebar accent */
+    --sidebar-accent-foreground: 240 4.8% 95.9%; /* Light text on sidebar accent */
+    --sidebar-border: 240 3.7% 15.9%;      /* Dark sidebar border */
+    --sidebar-ring: 217.2 91.2% 59.8%;     /* Sidebar focus ring color */
   }
 }
 
+/* Base styles applied to all elements */
 @layer base {
+  /* Apply border color to all elements */
   * {
     @apply border-border;
   }
+  
+  /* Apply background and text colors to body */
   body {
     @apply bg-background text-foreground;
   }
