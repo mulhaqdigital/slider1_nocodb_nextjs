@@ -9,6 +9,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useMobile } from "@/hooks/use-mobile"
 
 interface CardItem {
   title: string
@@ -26,6 +27,7 @@ export default function CardSlider() {
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
+  const isMobile = useMobile()
 
   // Touch and mouse event handlers for smooth scrolling
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -106,38 +108,40 @@ export default function CardSlider() {
   // Function to scroll left
   const handleScrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -320, behavior: "smooth" })
+      const scrollAmount = isMobile ? -260 : -320
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" })
     }
   }
 
   // Function to scroll right
   const handleScrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 320, behavior: "smooth" })
+      const scrollAmount = isMobile ? 260 : 320
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" })
     }
   }
 
   if (loading) {
     return (
-      <div className="text-center p-5 text-lg text-muted-foreground">
-        <div className="flex space-x-4 overflow-x-auto py-4">
+      <div className="text-center p-2 sm:p-4 text-lg text-muted-foreground">
+        <div className="flex space-x-2 sm:space-x-4 overflow-x-auto py-2 sm:py-4">
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="min-w-[280px] h-[450px] border-2 border-[#dddddd] rounded-[15px] p-[15px] shadow-[0_4px_12px_rgba(0,0,0,0.1)] text-center bg-white relative overflow-hidden m-[0_5px] touch-pan-x"
+              className="min-w-[260px] sm:min-w-[280px] h-[400px] sm:h-[450px] border-2 border-[#dddddd] rounded-[15px] p-3 sm:p-[15px] shadow-[0_4px_12px_rgba(0,0,0,0.1)] text-center bg-white relative overflow-hidden touch-pan-x"
             >
-              <div className="h-[280px] w-full rounded-[10px] overflow-hidden bg-[#f0f0f0]">
+              <div className="h-[200px] sm:h-[280px] w-full rounded-[10px] overflow-hidden bg-[#f0f0f0]">
                 <Skeleton className="h-full w-full" />
               </div>
-              <div className="mt-[15px]">
-                <Skeleton className="h-5 w-3/4 mx-auto" />
+              <div className="mt-3 sm:mt-[15px]">
+                <Skeleton className="h-4 sm:h-5 w-3/4 mx-auto" />
               </div>
-              <div className="mt-[10px]">
-                <Skeleton className="h-4 w-full mb-2" />
-                <Skeleton className="h-4 w-5/6 mx-auto" />
+              <div className="mt-2 sm:mt-[10px]">
+                <Skeleton className="h-3 sm:h-4 w-full mb-2" />
+                <Skeleton className="h-3 sm:h-4 w-5/6 mx-auto" />
               </div>
-              <div className="mt-[10px]">
-                <Skeleton className="h-4 w-1/2 mx-auto" />
+              <div className="mt-2 sm:mt-[10px]">
+                <Skeleton className="h-3 sm:h-4 w-1/2 mx-auto" />
               </div>
             </div>
           ))}
@@ -155,22 +159,36 @@ export default function CardSlider() {
   }
 
   return (
-    <div className="relative w-full max-w-full mx-auto overflow-hidden py-5">
-      {/* Left Navigation Button */}
-      <Button
-        onClick={handleScrollLeft}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 h-auto nav-button bg-[rgba(0,0,0,0.6)] hover:bg-[rgba(0,0,0,0.8)] text-white"
-        size="icon"
-        variant="secondary"
-      >
-        <ChevronLeft className="h-6 w-6" />
-        <span className="sr-only">Scroll left</span>
-      </Button>
+    <div className="relative w-full max-w-full mx-auto overflow-hidden py-2 sm:py-5">
+      {/* Navigation Buttons - Hidden on mobile */}
+      {!isMobile && (
+        <>
+          <Button
+            onClick={handleScrollLeft}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 h-auto nav-button bg-[rgba(0,0,0,0.6)] hover:bg-[rgba(0,0,0,0.8)] text-white hidden sm:flex"
+            size="icon"
+            variant="secondary"
+          >
+            <ChevronLeft className="h-4 sm:h-6 w-4 sm:w-6" />
+            <span className="sr-only">Scroll left</span>
+          </Button>
+
+          <Button
+            onClick={handleScrollRight}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 h-auto nav-button bg-[rgba(0,0,0,0.6)] hover:bg-[rgba(0,0,0,0.8)] text-white hidden sm:flex"
+            size="icon"
+            variant="secondary"
+          >
+            <ChevronRight className="h-4 sm:h-6 w-4 sm:w-6" />
+            <span className="sr-only">Scroll right</span>
+          </Button>
+        </>
+      )}
 
       {/* Scrollable Container */}
       <div
         ref={scrollRef}
-        className="flex gap-5 overflow-x-auto px-5 py-4 scroll-smooth touch-pan-x card-container hide-scrollbar"
+        className="flex gap-2 sm:gap-5 overflow-x-auto px-2 sm:px-5 py-2 sm:py-4 scroll-smooth touch-pan-x card-container hide-scrollbar"
         style={{ scrollSnapType: "x mandatory" }}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
@@ -191,17 +209,6 @@ export default function CardSlider() {
           />
         ))}
       </div>
-
-      {/* Right Navigation Button */}
-      <Button
-        onClick={handleScrollRight}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 rounded-full p-2 h-auto nav-button bg-[rgba(0,0,0,0.6)] hover:bg-[rgba(0,0,0,0.8)] text-white"
-        size="icon"
-        variant="secondary"
-      >
-        <ChevronRight className="h-6 w-6" />
-        <span className="sr-only">Scroll right</span>
-      </Button>
     </div>
   )
 }
@@ -209,6 +216,7 @@ export default function CardSlider() {
 function CardItem({ title, description, author, imageUrl, link }: CardItem) {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
+  const isMobile = useMobile()
 
   // Function to handle image error
   const handleImageError = () => {
@@ -224,30 +232,34 @@ function CardItem({ title, description, author, imageUrl, link }: CardItem) {
   return (
     <div
       className={`
-        min-w-[280px] h-[450px] 
-        border-2 border-[#dddddd] rounded-[15px] p-[15px] 
-        shadow-[0_4px_12px_rgba(0,0,0,0.1)] 
-        text-center font-[Arial,sans-serif] bg-white 
-        scroll-snap-center 
-        ${link ? "cursor-pointer" : "cursor-default"} 
-        relative overflow-hidden 
-        transition-[transform,box-shadow] duration-200 
-        m-[0_5px] 
-        [webkit-tap-highlight-color:transparent] 
+        min-w-[260px] sm:min-w-[280px] h-[400px] sm:h-[450px]
+        border-2 border-[#dddddd] rounded-[15px] p-3 sm:p-[15px]
+        shadow-[0_4px_12px_rgba(0,0,0,0.1)]
+        text-center font-[Arial,sans-serif] bg-white
+        scroll-snap-center
+        ${link ? "cursor-pointer" : "cursor-default"}
+        relative overflow-hidden
+        transition-[transform,box-shadow] duration-200
+        m-[0_2px] sm:m-[0_5px]
+        [webkit-tap-highlight-color:transparent]
         touch-pan-x
         flex flex-col
       `}
       onClick={() => link && window.open(link, "_blank")}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-5px)"
-        e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.15)"
+        if (!isMobile) {
+          e.currentTarget.style.transform = "translateY(-5px)"
+          e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.15)"
+        }
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)"
-        e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"
+        if (!isMobile) {
+          e.currentTarget.style.transform = "translateY(0)"
+          e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"
+        }
       }}
     >
-      <div className="relative w-full h-[220px] bg-[#f0f0f0] rounded-[10px] overflow-hidden mb-4">
+      <div className="relative w-full h-[180px] sm:h-[220px] bg-[#f0f0f0] rounded-[10px] overflow-hidden mb-3 sm:mb-4">
         {!imageLoaded && <div className="skeleton absolute inset-0 w-full h-full"></div>}
         {!imageError ? (
           <Image
@@ -264,19 +276,21 @@ function CardItem({ title, description, author, imageUrl, link }: CardItem) {
           </div>
         )}
       </div>
-
-      <div className="flex flex-col flex-grow px-2">
-        <h3 className="text-[20px] font-semibold leading-tight mb-3 overflow-hidden text-[#333] line-clamp-2 min-h-[50px]">
-          {title || "Untitled"}
-        </h3>
-
-        <p className="text-[16px] leading-snug mb-4 overflow-hidden text-[#666] line-clamp-4 flex-grow">
-          {description || "No description available"}
-        </p>
-
-        <p className="italic text-[#888] text-[14px] mt-auto pb-2">By {author || "Unknown"}</p>
-      </div>
+      <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 line-clamp-2">{title}</h3>
+      <p className="text-sm sm:text-base text-gray-600 mb-2 sm:mb-3 line-clamp-3">{description}</p>
+      <p className="text-xs sm:text-sm text-gray-500 mt-auto">{author}</p>
     </div>
   )
 }
+
+// Add this CSS to your global styles or component
+const styles = `
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
